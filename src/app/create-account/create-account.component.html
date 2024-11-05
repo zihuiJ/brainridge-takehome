@@ -1,18 +1,38 @@
-<form [formGroup]="accountForm">
-    <mat-radio-group formControlName="accountType">
-      <mat-radio-button *ngFor="let type of accountTypes" [value]="type">{{ type }}</mat-radio-button>
+<h4>Create Account</h4>
+<mat-card>
+  
+  <form [formGroup]="accountForm">
+    <label>Account Type: </label>
+    <mat-radio-group
+      formControlName="accountType"
+      aria-label="Select Account Type"
+    >
+      <mat-radio-button *ngFor="let type of accountTypes" [value]="type">{{
+        type
+      }}</mat-radio-button>
     </mat-radio-group>
-  
-    <mat-form-field>
+
+    <mat-form-field appearance="outline">
       <mat-label>Account Name</mat-label>
-      <input matInput formControlName="accountName">
+      <input matInput formControlName="accountName" maxlength="20" />
+      <mat-hint align="start"
+        >{{ accountForm.get("accountName")?.value?.length || 0 }} / 20</mat-hint
+      >
+      <mat-error *ngIf="accountForm.get('accountName')?.invalid"
+        >Account name is required.</mat-error
+      >
     </mat-form-field>
-  
-    <mat-form-field>
-      <mat-label>Balance</mat-label>
-      <input matInput type="number" formControlName="balance">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Initial Balance</mat-label>
+      <input matInput type="number" formControlName="balance" />
+      <mat-error *ngIf="accountForm.get('balance')?.invalid"
+        >Balance cannot be negative.</mat-error
+      >
     </mat-form-field>
-  
-    <app-create-account-button [isAccountSelected]="accountForm.valid"></app-create-account-button>
+
+    <app-create-account-button
+      [isAccountSelected]="accountForm.valid"
+    ></app-create-account-button>
   </form>
-  
+</mat-card>
