@@ -1,1 +1,8 @@
-<p>transaction-history works!</p>
+<mat-form-field>
+  <mat-label>Filter Transactions</mat-label>
+  <input matInput placeholder="Search" />
+</mat-form-field>
+
+<table mat-table [dataSource]="transactions" class="mat-elevation-z8">
+  <!-- Columns for date, description, and amount -->
+</table>
