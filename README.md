@@ -1,6 +1,6 @@
 # Brainridge takehome
-##
-tech stack: TypeScript, Angular, Material UI
+## tech stack
+TypeScript, Angular, Material UI
 ## setup
 make sure you have Node.js > 18 installed and Angular CLI `npm install -g @angular/cli`
 1. clone repo `git clone git@github.com:zihuiJ/brainridge-takehome.git`, and `cd brainridge-takehome`
