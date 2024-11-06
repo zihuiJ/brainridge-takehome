@@ -20,6 +20,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { map } from 'rxjs/operators';
 import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
+import { SharedButtonComponent } from '../shared/components/shared-button/shared-button.component';
 
 @Component({
   selector: 'app-transfer-funds',
@@ -35,7 +36,8 @@ import { PageContainerComponent } from '../shared/components/page-container/page
     MatListModule,
     MatSelectModule,
     MatSnackBarModule,
-    PageContainerComponent
+    PageContainerComponent,
+    SharedButtonComponent
   ]
 })
 export class TransferFundsComponent implements OnDestroy {

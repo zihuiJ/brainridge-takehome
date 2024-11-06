@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule, Router } from '@angular/router';
-import { CreateAccountButtonComponent } from '../shared/shared';
+import { SharedButtonComponent } from '../shared/components/shared-button/shared-button.component';
 import { AccountService } from '../shared/services/account.service';
 import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
 
@@ -21,7 +21,7 @@ import { PageContainerComponent } from '../shared/components/page-container/page
     MatInputModule,
     MatCardModule,
     RouterModule,
-    CreateAccountButtonComponent,
+    SharedButtonComponent,
     PageContainerComponent
   ],
   templateUrl: './create-account.component.html',

@@ -41,9 +41,11 @@
         </mat-error>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" [disabled]="!transferForm.valid">
-        Transfer Funds
-      </button>
+      <shared-button
+        [disabled]="!transferForm.valid"
+        buttonText="Transfer Funds"
+        (onClick)="onSubmit()"
+      ></shared-button>
     </form>
 
   <!-- Accounts list -->

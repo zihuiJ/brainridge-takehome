@@ -20,10 +20,10 @@
       <mat-error *ngIf="accountForm.get('balance')?.invalid">Balance cannot be negative.</mat-error>
     </mat-form-field>
 
-    <app-create-account-button
-      [isAccountSelected]="accountForm.valid"
-      [accountType]="accountForm.get('accountType')?.value"
-      (onCreate)="onSubmit()"
-    ></app-create-account-button>
+    <shared-button
+      [disabled]="accountForm.valid"
+      buttonText="Create {{ accountForm.get('accountType')?.value || 'Account' }}"
+      (onClick)="onSubmit()"
+    ></shared-button>
   </form>
 </app-page-container>
