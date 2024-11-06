@@ -33,6 +33,7 @@
 
     <app-create-account-button
       [isAccountSelected]="accountForm.valid"
+      [accountType]="accountForm.get('accountType')?.value"
     ></app-create-account-button>
   </form>
 </mat-card>
