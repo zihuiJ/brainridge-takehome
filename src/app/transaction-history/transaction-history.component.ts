@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule, Sort } from '@angular/material/sort';
 import { AccountService } from '../shared/services/account.service';
 import { Transaction } from '../shared/models/transaction.model';
 import { Account } from '../shared/models/account.model';
@@ -20,7 +21,8 @@ import { Observable, map } from 'rxjs';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSortModule
   ]
 })
 export class TransactionHistoryComponent {
@@ -32,6 +34,22 @@ export class TransactionHistoryComponent {
   constructor(private accountService: AccountService) {
     this.accounts$ = this.accountService.getAccounts();
     this.transactions$ = this.accountService.getTransactions();
+  }
+
+  sortData(sort: Sort) {
+    this.transactions$ = this.transactions$.pipe(
+      map(transactions => {
+        if (!sort.active || sort.direction === '') {
+          return transactions;
+        }
+
+        return transactions.slice().sort((a, b) => {
+          const dateA = new Date(a.date).getTime();
+          const dateB = new Date(b.date).getTime();
+          return (sort.direction === 'asc' ? dateA - dateB : dateB - dateA);
+        });
+      })
+    );
   }
 
   onAccountSelect(accountId: string) {
