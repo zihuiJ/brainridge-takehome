@@ -1,15 +1,4 @@
-.page-container {
-  display: flex;
-  gap: 2rem;
-  padding: 1rem;
-}
-
 .form-card {
-  flex: 1;
-  max-width: 500px;
-}
-
-.accounts-card {
   flex: 1;
   max-width: 500px;
 }
@@ -23,10 +12,6 @@
 
 .account-balance {
   font-weight: bold;
-}
-
-h4 {
-  margin-bottom: 1rem;
 }
 
 form {
