@@ -1,11 +1,18 @@
-<mat-form-field>
-  <mat-label>Filter Transactions</mat-label>
-  <input matInput placeholder="Search" />
-</mat-form-field>
-
 <mat-card>
   <h4>Transaction History</h4>
   
+  <!-- Account Filter Dropdown -->
+  <mat-form-field appearance="outline">
+    <mat-label>Filter by Account</mat-label>
+    <mat-select [(value)]="selectedAccountId" (selectionChange)="onAccountSelect($event.value)">
+      <mat-option value="">All Transactions</mat-option>
+      <mat-option *ngFor="let account of accounts$ | async" [value]="account.id">
+        {{account.accountName}} ({{account.accountType}})
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Transaction Table -->
   <table mat-table [dataSource]="transactions$" class="mat-elevation-z8">
     <!-- Date Column -->
     <ng-container matColumnDef="date">
@@ -38,7 +45,9 @@
     <!-- Amount Column -->
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef> Amount </th>
-      <td mat-cell *matCellDef="let transaction"> 
+      <td mat-cell *matCellDef="let transaction" 
+          [ngClass]="{'positive': transaction.toAccountId === selectedAccountId, 
+                      'negative': transaction.fromAccountId === selectedAccountId}"> 
         ${{transaction.amount}} 
       </td>
     </ng-container>

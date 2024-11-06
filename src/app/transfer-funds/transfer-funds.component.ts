@@ -15,8 +15,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AccountService } from '../shared/services/account.service';
 import { Account } from '../shared/models/account.model';
+import { Transaction } from '../shared/models/transaction.model';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transfer-funds',
@@ -37,6 +39,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class TransferFundsComponent {
   transferForm: FormGroup;
   accounts$: Observable<Account[]>;
+  selectedFilterAccount: string = '';
+  filteredTransactions$: Observable<Transaction[]>;
 
   constructor(
     private fb: FormBuilder,
@@ -60,6 +64,16 @@ export class TransferFundsComponent {
       this.validateAccounts();
       this.updateAmountValidation(accountId);
     });
+
+    // Initialize filtered transactions
+    this.filteredTransactions$ = this.accountService.getTransactions().pipe(
+      map(transactions => this.selectedFilterAccount 
+        ? transactions.filter(t => 
+            t.fromAccountId === this.selectedFilterAccount || 
+            t.toAccountId === this.selectedFilterAccount)
+        : transactions
+      )
+    );
   }
 
   private validateAccounts() {
@@ -115,5 +129,17 @@ export class TransferFundsComponent {
         });
       }
     }
+  }
+
+  onFilterChange(accountId: string) {
+    this.selectedFilterAccount = accountId;
+    this.filteredTransactions$ = this.accountService.getTransactions().pipe(
+      map(transactions => accountId 
+        ? transactions.filter(t => 
+            t.fromAccountId === accountId || 
+            t.toAccountId === accountId)
+        : transactions
+      )
+    );
   }
 }

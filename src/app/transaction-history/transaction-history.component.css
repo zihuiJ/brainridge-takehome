@@ -3,9 +3,13 @@ mat-card {
   padding: 1rem;
 }
 
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
 table {
   width: 100%;
-  margin-top: 1rem;
 }
 
 .mat-column-date {
@@ -17,6 +21,19 @@ table {
   padding-right: 1rem;
 }
 
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}
+
 h4 {
   margin-bottom: 1rem;
+}
+
+/* Add some spacing between the dropdown and table */
+.mat-mdc-form-field {
+  margin-bottom: 20px;
 }
