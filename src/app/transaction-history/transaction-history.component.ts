@@ -10,6 +10,7 @@ import { AccountService } from '../shared/services/account.service';
 import { Transaction } from '../shared/models/transaction.model';
 import { Account } from '../shared/models/account.model';
 import { Observable, map } from 'rxjs';
+import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
 
 @Component({
   selector: 'app-transaction-history',
@@ -22,7 +23,8 @@ import { Observable, map } from 'rxjs';
     MatInputModule,
     MatCardModule,
     MatSelectModule,
-    MatSortModule
+    MatSortModule,
+    PageContainerComponent
   ]
 })
 export class TransactionHistoryComponent {

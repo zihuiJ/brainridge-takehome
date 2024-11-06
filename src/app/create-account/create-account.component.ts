@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { RouterModule, Router } from '@angular/router';
 import { CreateAccountButtonComponent } from '../shared/shared';
 import { AccountService } from '../shared/services/account.service';
+import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
 
 @Component({
   selector: 'app-create-account',
@@ -20,7 +21,8 @@ import { AccountService } from '../shared/services/account.service';
     MatInputModule,
     MatCardModule,
     RouterModule,
-    CreateAccountButtonComponent
+    CreateAccountButtonComponent,
+    PageContainerComponent
   ],
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.css']

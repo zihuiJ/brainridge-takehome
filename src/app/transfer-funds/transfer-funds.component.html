@@ -1,7 +1,4 @@
-<div class="page-container">
-  <!-- Transfer form -->
-  <mat-card class="form-card">
-    <h4>Transfer Funds</h4>
+<app-page-container title="Transfer Funds">
     <form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline">
         <mat-label>From Account</mat-label>
@@ -48,11 +45,9 @@
         Transfer Funds
       </button>
     </form>
-  </mat-card>
 
   <!-- Accounts list -->
-  <mat-card class="accounts-card">
-    <h4>Your Accounts</h4>
+  <app-page-container title="Your Accounts">
     <mat-list>
       <ng-container *ngIf="accounts$ | async as accounts">
         <mat-list-item *ngFor="let account of accounts">
@@ -67,4 +62,3 @@
         </mat-list-item>
       </ng-container>
     </mat-list>
-  </mat-card>

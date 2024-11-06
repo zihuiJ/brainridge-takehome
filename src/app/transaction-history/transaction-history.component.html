@@ -1,5 +1,4 @@
-<mat-card>
-  <h4>Transaction History</h4>
+<app-page-container title="Transaction History">
   
   <!-- Account Filter Dropdown -->
   <mat-form-field appearance="outline">
@@ -60,4 +59,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-</mat-card>
+</app-page-container>
