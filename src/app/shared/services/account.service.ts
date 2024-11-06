@@ -25,4 +25,27 @@ export class AccountService {
   getAccountById(id: string): Account | undefined {
     return this.accounts.getValue().find(account => account.id === id);
   }
+
+  transferFunds(fromAccountId: string, toAccountId: string, amount: number): boolean {
+    const currentAccounts = this.accounts.getValue();
+    const fromAccount = currentAccounts.find(acc => acc.id === fromAccountId);
+    const toAccount = currentAccounts.find(acc => acc.id === toAccountId);
+
+    if (!fromAccount || !toAccount || fromAccount.balance < amount) {
+      return false;
+    }
+
+    const updatedAccounts = currentAccounts.map(account => {
+      if (account.id === fromAccountId) {
+        return { ...account, balance: account.balance - amount };
+      }
+      if (account.id === toAccountId) {
+        return { ...account, balance: account.balance + amount };
+      }
+      return account;
+    });
+
+    this.accounts.next(updatedAccounts);
+    return true;
+  }
 }
