@@ -5,8 +5,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { CreateAccountButtonComponent } from '../shared/shared';
+import { AccountService } from '../shared/services/account.service';
 
 @Component({
   selector: 'app-create-account',
@@ -26,9 +27,13 @@ import { CreateAccountButtonComponent } from '../shared/shared';
 })
 export class CreateAccountComponent {
   accountForm: FormGroup;
-  accountTypes = ['Chequing', 'Saving'];
+  accountTypes = ['Chequing', 'Saving'] as const;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private accountService: AccountService,
+    private router: Router
+  ) {
     this.accountForm = this.fb.group({
       accountType: ['', Validators.required],
       accountName: [
@@ -41,5 +46,12 @@ export class CreateAccountComponent {
       ],
       balance: [0, [Validators.required, Validators.min(0)]],
     });
+  }
+
+  onSubmit() {
+    if (this.accountForm.valid) {
+      this.accountService.createAccount(this.accountForm.value);
+      this.router.navigate(['/transfer-funds']);
+    }
   }
 }

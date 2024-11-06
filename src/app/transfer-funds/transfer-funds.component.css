@@ -1,0 +1,40 @@
+.page-container {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.form-card {
+  flex: 1;
+  max-width: 500px;
+}
+
+.accounts-card {
+  flex: 1;
+  max-width: 500px;
+}
+
+.account-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.account-balance {
+  font-weight: bold;
+}
+
+h4 {
+  margin-bottom: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+}

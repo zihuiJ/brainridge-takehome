@@ -1,18 +1,43 @@
-<form [formGroup]="transferForm">
-  <mat-form-field>
-    <mat-label>From Account</mat-label>
-    <input matInput formControlName="fromAccount" />
-  </mat-form-field>
+<div class="page-container">
+  <!-- Transfer form -->
+  <mat-card class="form-card">
+    <h4>Transfer Funds</h4>
+    <form [formGroup]="transferForm">
+      <mat-form-field appearance="outline">
+        <mat-label>From Account</mat-label>
+        <input matInput formControlName="fromAccount" />
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>To Account</mat-label>
-    <input matInput formControlName="toAccount" />
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>To Account</mat-label>
+        <input matInput formControlName="toAccount" />
+      </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Amount</mat-label>
-    <input matInput type="number" formControlName="amount" />
-  </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" formControlName="amount" />
+      </mat-form-field>
 
-  <button mat-raised-button [disabled]="!transferForm.valid">Transfer</button>
-</form>
+      <button mat-raised-button color="primary" [disabled]="!transferForm.valid">Transfer</button>
+    </form>
+  </mat-card>
+
+  <!-- Accounts list -->
+  <mat-card class="accounts-card">
+    <h4>Your Accounts</h4>
+    <mat-list>
+      <ng-container *ngIf="accounts$ | async as accounts">
+        <mat-list-item *ngFor="let account of accounts">
+          <div class="account-item">
+            <span class="account-name">{{account.accountName}} ({{account.accountType}})</span>
+            <span class="account-balance">${{account.balance}}</span>
+          </div>
+        </mat-list-item>
+        
+        <mat-list-item *ngIf="accounts.length === 0">
+          <div>No accounts available for transfer</div>
+        </mat-list-item>
+      </ng-container>
+    </mat-list>
+  </mat-card>
+</div>
