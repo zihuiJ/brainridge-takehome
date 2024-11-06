@@ -10,6 +10,54 @@ export class AccountService {
   private accounts = new BehaviorSubject<Account[]>([]);
   private transactions = new BehaviorSubject<Transaction[]>([]);
 
+  constructor() {
+    // Initialize with default accounts
+    const defaultAccounts: Account[] = [
+      {
+        id: '1',
+        accountType: 'Chequing',
+        accountName: 'Main Chequing',
+        balance: 2500
+      },
+      {
+        id: '2',
+        accountType: 'Saving',
+        accountName: 'Emergency Fund',
+        balance: 10000
+      }
+    ];
+
+    // Set initial accounts
+    this.accounts.next(defaultAccounts);
+
+    // Create initial transactions
+    const defaultTransactions: Transaction[] = [
+      {
+        id: '1',
+        fromAccountId: '1',
+        toAccountId: '2',
+        amount: 500,
+        date: new Date('2024-02-12'),
+        type: 'Transfer',
+        fromAccountName: 'Main Chequing',
+        toAccountName: 'Emergency Fund'
+      },
+      {
+        id: '2',
+        fromAccountId: '2',
+        toAccountId: '1',
+        amount: 200,
+        date: new Date('2024-03-16'),
+        type: 'Transfer',
+        fromAccountName: 'Emergency Fund',
+        toAccountName: 'Main Chequing'
+      }
+    ];
+
+    // Set initial transactions
+    this.transactions.next(defaultTransactions);
+  }
+
   getAccounts(): Observable<Account[]> {
     return this.accounts.asObservable();
   }
