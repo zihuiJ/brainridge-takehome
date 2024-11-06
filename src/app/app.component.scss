@@ -1,0 +1,10 @@
+nav {
+  width: 100%;
+}
+
+:host ::ng-deep {
+  .mat-tab-link {
+    min-width: 120px;
+    padding: 0 24px;
+  }
+} 

@@ -1,7 +1,14 @@
-<nav>
-  <a routerLink="/create-account">Create Account</a>
-  <a routerLink="/transfer-funds">Transfer Funds</a>
-  <a routerLink="/transaction-history">Transaction History</a>
-</nav>
-
-<router-outlet />
+<mat-toolbar color="primary">
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" mat-stretch-tabs="false" mat-align-tabs="start">
+    <a mat-tab-link
+       *ngFor="let link of links"
+       [routerLink]="link.path"
+       routerLinkActive #rla="routerLinkActive"
+       [active]="rla.isActive">
+      {{link.label}}
+    </a>
+  </nav>
+</mat-toolbar>
+<mat-tab-nav-panel #tabPanel>
+  <router-outlet></router-outlet>
+</mat-tab-nav-panel>
