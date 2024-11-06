@@ -72,16 +72,18 @@ export class TransferFundsComponent {
   }
 
   private updateAmountValidation(accountId: string) {
-    const account = this.accountService.getAccountById(accountId);
-    const maxBalance = account?.balance ?? 0;
-    
-    this.transferForm.get('amount')?.setValidators([
-      Validators.required,
-      Validators.min(0.01),
-      Validators.max(maxBalance)
-    ]);
-    
-    this.transferForm.get('amount')?.updateValueAndValidity();
+    this.accounts$.subscribe(accounts => {
+      const account = accounts.find(acc => acc.id === accountId);
+      const maxBalance = account?.balance ?? 0;
+      
+      this.transferForm.get('amount')?.setValidators([
+        Validators.required,
+        Validators.min(0.01),
+        Validators.max(maxBalance)
+      ]);
+      
+      this.transferForm.get('amount')?.updateValueAndValidity();
+    });
   }
 
   onSubmit() {

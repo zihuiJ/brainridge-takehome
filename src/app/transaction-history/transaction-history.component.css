@@ -1,0 +1,22 @@
+mat-card {
+  margin: 1rem;
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.mat-column-date {
+  min-width: 160px;
+}
+
+.mat-column-amount {
+  text-align: right;
+  padding-right: 1rem;
+}
+
+h4 {
+  margin-bottom: 1rem;
+}

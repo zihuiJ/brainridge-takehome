@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RouterModule } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { AccountService } from '../shared/services/account.service';
+import { Transaction } from '../shared/models/transaction.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-transaction-history',
@@ -14,13 +17,14 @@ import { RouterModule } from '@angular/router';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    RouterModule
+    MatCardModule
   ]
 })
-export class TransactionHistoryComponent {
-  displayedColumns: string[] = ['date', 'description', 'amount'];
-  transactions = [
-    { date: '2024-11-05', description: 'Deposit', amount: 500 },
-    { date: '2024-11-04', description: 'Withdrawal', amount: -200 }
-  ];
+export class TransactionHistoryComponent{
+  displayedColumns: string[] = ['date', 'type', 'from', 'to', 'amount'];
+  transactions$: Observable<Transaction[]>;
+
+  constructor(private accountService: AccountService) {
+    this.transactions$ = this.accountService.getTransactions();
+  }
 }

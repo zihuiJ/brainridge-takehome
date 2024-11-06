@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Account } from '../models/account.model';
+import { Transaction } from '../models/transaction.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   private accounts = new BehaviorSubject<Account[]>([]);
+  private transactions = new BehaviorSubject<Transaction[]>([]);
 
   getAccounts(): Observable<Account[]> {
     return this.accounts.asObservable();
+  }
+
+  getTransactions(): Observable<Transaction[]> {
+    return this.transactions.asObservable();
   }
 
   createAccount(accountData: Omit<Account, 'id' | 'createdAt'>): void {
@@ -20,10 +26,19 @@ export class AccountService {
 
     const currentAccounts = this.accounts.getValue();
     this.accounts.next([...currentAccounts, newAccount]);
-  }
 
-  getAccountById(id: string): Account | undefined {
-    return this.accounts.getValue().find(account => account.id === id);
+    // Record initial deposit as a transaction
+    if (accountData.balance > 0) {
+      this.recordTransaction({
+        id: crypto.randomUUID(),
+        fromAccountId: '',
+        toAccountId: newAccount.id,
+        amount: accountData.balance,
+        date: new Date(),
+        type: 'Initial Deposit',
+        toAccountName: newAccount.accountName
+      });
+    }
   }
 
   transferFunds(fromAccountId: string, toAccountId: string, amount: number): boolean {
@@ -46,6 +61,24 @@ export class AccountService {
     });
 
     this.accounts.next(updatedAccounts);
+
+    // Record the transfer transaction
+    this.recordTransaction({
+      id: crypto.randomUUID(),
+      fromAccountId,
+      toAccountId,
+      amount,
+      date: new Date(),
+      type: 'Transfer',
+      fromAccountName: fromAccount.accountName,
+      toAccountName: toAccount.accountName
+    });
+
     return true;
+  }
+
+  private recordTransaction(transaction: Transaction): void {
+    const currentTransactions = this.transactions.getValue();
+    this.transactions.next([...currentTransactions, transaction]);
   }
 }
