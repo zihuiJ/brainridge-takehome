@@ -50,6 +50,7 @@ export class AccountService {
       return false;
     }
 
+    // Create new array with updated balances
     const updatedAccounts = currentAccounts.map(account => {
       if (account.id === fromAccountId) {
         return { ...account, balance: account.balance - amount };
@@ -60,6 +61,7 @@ export class AccountService {
       return account;
     });
 
+    // Update accounts BehaviorSubject
     this.accounts.next(updatedAccounts);
 
     // Record the transfer transaction
@@ -80,5 +82,11 @@ export class AccountService {
   private recordTransaction(transaction: Transaction): void {
     const currentTransactions = this.transactions.getValue();
     this.transactions.next([...currentTransactions, transaction]);
+  }
+
+  // Helper method to get current balance
+  getAccountBalance(accountId: string): number {
+    const account = this.accounts.getValue().find(acc => acc.id === accountId);
+    return account?.balance ?? 0;
   }
 }

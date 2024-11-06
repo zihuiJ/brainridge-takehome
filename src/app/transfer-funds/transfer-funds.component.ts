@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -16,7 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AccountService } from '../shared/services/account.service';
 import { Account } from '../shared/models/account.model';
 import { Transaction } from '../shared/models/transaction.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { map } from 'rxjs/operators';
 
@@ -36,11 +36,12 @@ import { map } from 'rxjs/operators';
     MatSnackBarModule
   ]
 })
-export class TransferFundsComponent {
+export class TransferFundsComponent implements OnDestroy {
   transferForm: FormGroup;
   accounts$: Observable<Account[]>;
   selectedFilterAccount: string = '';
   filteredTransactions$: Observable<Transaction[]>;
+  private accountsSub?: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -53,6 +54,14 @@ export class TransferFundsComponent {
       fromAccount: ['', Validators.required],
       toAccount: ['', Validators.required],
       amount: [0, [Validators.required, Validators.min(0.01)]]
+    });
+
+    // Subscribe to account changes to update validations
+    this.accountsSub = this.accounts$.subscribe(() => {
+      const fromAccountId = this.transferForm.get('fromAccount')?.value;
+      if (fromAccountId) {
+        this.updateAmountValidation(fromAccountId);
+      }
     });
 
     // Add validation for same account selection
@@ -74,6 +83,10 @@ export class TransferFundsComponent {
         : transactions
       )
     );
+  }
+
+  ngOnDestroy() {
+    this.accountsSub?.unsubscribe();
   }
 
   private validateAccounts() {
