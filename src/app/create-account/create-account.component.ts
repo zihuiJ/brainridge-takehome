@@ -9,6 +9,11 @@ import { RouterModule, Router } from '@angular/router';
 import { SharedButtonComponent } from '../shared/components/shared-button/shared-button.component';
 import { AccountService } from '../shared/services/account.service';
 import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
+import { VALIDATION_CONSTANTS } from '../shared/constants/validation.constants';
+const ACCOUNT_TYPES = ['Chequing', 'Saving'] as const;
+const ACCOUNT_NAME_MIN_LENGTH = 3;
+const ACCOUNT_NAME_MAX_LENGTH = 20;
+const MIN_BALANCE = 0;
 
 @Component({
   selector: 'app-create-account',
@@ -29,7 +34,15 @@ import { PageContainerComponent } from '../shared/components/page-container/page
 })
 export class CreateAccountComponent {
   accountForm: FormGroup;
-  accountTypes = ['Chequing', 'Saving'] as const;
+  accountTypes = ACCOUNT_TYPES;
+  readonly MAX_ACCOUNT_NAME_LENGTH = VALIDATION_CONSTANTS.ACCOUNT.NAME.MAX_LENGTH;
+  readonly VALIDATION_CONSTANTS = {
+    ACCOUNT: {
+      NAME: {
+        REQUIRED_ERROR: 'Account name is required'
+      }
+    }
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -42,11 +55,11 @@ export class CreateAccountComponent {
         '',
         [
           Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(20),
+          Validators.minLength(ACCOUNT_NAME_MIN_LENGTH),
+          Validators.maxLength(ACCOUNT_NAME_MAX_LENGTH),
         ],
       ],
-      balance: [0, [Validators.required, Validators.min(0)]],
+      balance: [MIN_BALANCE, [Validators.required, Validators.min(MIN_BALANCE)]],
     });
   }
 

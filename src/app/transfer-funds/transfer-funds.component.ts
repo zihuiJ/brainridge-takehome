@@ -21,6 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { map } from 'rxjs/operators';
 import { PageContainerComponent } from '../shared/components/page-container/page-container.component';
 import { SharedButtonComponent } from '../shared/components/shared-button/shared-button.component';
+import { VALIDATION_CONSTANTS, UI_CONSTANTS } from '../shared/constants/validation.constants';
 
 @Component({
   selector: 'app-transfer-funds',
@@ -57,7 +58,7 @@ export class TransferFundsComponent implements OnDestroy {
     this.transferForm = this.fb.group({
       fromAccount: ['', Validators.required],
       toAccount: ['', Validators.required],
-      amount: [0, [Validators.required, Validators.min(0.01)]]
+      amount: [0, [Validators.required, Validators.min(VALIDATION_CONSTANTS.TRANSFER.MIN_AMOUNT)]]
     });
 
     // Subscribe to account changes to update validations
@@ -109,7 +110,7 @@ export class TransferFundsComponent implements OnDestroy {
       
       this.transferForm.get('amount')?.setValidators([
         Validators.required,
-        Validators.min(0.01),
+        Validators.min(VALIDATION_CONSTANTS.TRANSFER.MIN_AMOUNT),
         Validators.max(maxBalance)
       ]);
       
@@ -129,7 +130,7 @@ export class TransferFundsComponent implements OnDestroy {
 
       if (success) {
         this.snackBar.open('Transfer successful!', 'Close', {
-          duration: 3000,
+          duration: UI_CONSTANTS.SNACKBAR.DURATION,
           horizontalPosition: 'center',
           verticalPosition: 'top',
         });
@@ -140,7 +141,7 @@ export class TransferFundsComponent implements OnDestroy {
         });
       } else {
         this.snackBar.open('Transfer failed. Please try again.', 'Close', {
-          duration: 3000,
+          duration: UI_CONSTANTS.SNACKBAR.DURATION,
           horizontalPosition: 'center',
           verticalPosition: 'top',
         });

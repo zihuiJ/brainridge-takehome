@@ -9,9 +9,11 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Account Name</mat-label>
-      <input matInput formControlName="accountName" maxlength="20" />
-      <mat-hint align="start">{{ accountForm.get("accountName")?.value?.length || 0 }} / 20</mat-hint>
-      <mat-error *ngIf="accountForm.get('accountName')?.invalid">Account name is required.</mat-error>
+      <input matInput formControlName="accountName" [maxlength]="MAX_ACCOUNT_NAME_LENGTH" />
+      <mat-hint align="start">{{ accountForm.get("accountName")?.value?.length || 0 }} / {{MAX_ACCOUNT_NAME_LENGTH}}</mat-hint>
+      <mat-error *ngIf="accountForm.get('accountName')?.invalid">
+        {{VALIDATION_CONSTANTS.ACCOUNT.NAME.REQUIRED_ERROR}}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">

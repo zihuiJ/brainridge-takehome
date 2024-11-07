@@ -17,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   ]
 })
 export class AppComponent {
+  title = 'brainridge-takehome';
   links = [
     { path: '/create-account', label: 'Create Account' },
     { path: '/transfer-funds', label: 'Transfer Funds' },
